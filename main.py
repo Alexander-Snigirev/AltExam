@@ -1,13 +1,10 @@
 import matplotlib.pyplot as plt
 import os
-import sys
 import networkx as nx
-print(sys.executable)
-print(sys.version)
-
 
 step_counter = 0
-# Папка для сохранения визуализаций
+
+FNAME = "file"
 VIZ_DIR = "viz"
 
 def ensure_viz_dir():
@@ -76,7 +73,7 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
     
 
 def reading_file():
-    ff = open("file")
+    ff = open(FNAME)
     inp = ff.readlines()
     n,m = list(map(int,inp[0].split()))
     
