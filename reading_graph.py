@@ -11,10 +11,13 @@ def reading_file():
 
     for i in range(m):
         u, v, height = list(map(int, inp[i+1].split()))
+        u = str(u)
+        v = str(v)
         edges_dict[(u,v)] = height      # ключ - ребро, значение - его вес
         edges_set.add((u,v))
         vertexes |= {u,v}
-    root = int(inp[-1])    
+    root = int(inp[-1])   
+    print(root)
     ff.close()
     return n,root,vertexes,edges_dict,edges_set
 
