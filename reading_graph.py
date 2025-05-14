@@ -11,9 +11,12 @@ def reading_file():
 
     for i in range(m):
         u, v, height = list(map(int, inp[i+1].split()))
-        u = str(u)
-        v = str(v)
-        edges_dict[(u,v)] = height      # ключ - ребро, значение - его вес
+        u = str(u*100)
+        v = str(v*100)
+        if (u,v) not in edges_dict.keys():
+            edges_dict[(u,v)] = height      # ключ - ребро, значение - его вес
+        else:
+            edges_dict[(u,v)] = min(height, edges_dict[(u,v)])
         edges_set.add((u,v))
         vertexes |= {u,v}
     root = int(inp[-1])   
@@ -31,7 +34,10 @@ def reading_console():
 
     for i in range(m):
         u, v, height = list(map(int, input().split()))
-        edges_dict[(u,v)] = height      # ключ - ребро, значение - его вес
+        if (u,v) not in edges_dict.keys():
+            edges_dict[(u,v)] = height      # ключ - ребро, значение - его вес
+        else:
+            edges_dict[(u,v)] = min(height, edges_dict[(u,v)])
         edges_set.add((u,v))
         vertexes |= {u,v}
     root = int(input())    
