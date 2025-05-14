@@ -27,7 +27,7 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
     """
     global step_counter
     ensure_viz_dir()
-    
+    #print(edges_dict.items())
     G = nx.DiGraph()
     # Добавляем вершины
     G.add_nodes_from(vertexes)
@@ -57,7 +57,7 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
     
     # Рисуем граф
     plt.figure(figsize=(10, 8))  # Увеличиваем размер изображения
-    pos = nx.spring_layout(G, seed=42, k=0.5)  # Увеличиваем расстояние между вершинами с помощью k
+    pos = nx.spring_layout(G, seed=100, k=0.25)  # Увеличиваем расстояние между вершинами с помощью k
     
     # Рисуем вершины
     nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=600)
@@ -82,19 +82,26 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
     edge_labels = nx.get_edge_attributes(G, 'weight')
     for (u, v), weight in edge_labels.items():
         # Если есть обратное ребро, смещаем метку
-        offset = 0.1 if G.has_edge(v, u) else 0
+        
+        #offset = -0.1 if (v,u) in already_drawing else 0.1
         # Вычисляем позицию метки со смещением
-        x = (pos[u][0] + pos[v][0]) / 2
-        y = (pos[u][1] + pos[v][1]) / 2
-        # Добавляем небольшой случайный сдвиг для избежания перекрытия
-        random_offset = np.random.uniform(-0.05, 0.05) if G.has_edge(v, u) else 0
-        plt.text(x + offset, y + random_offset, weight, fontsize=8, ha='center', va='center', 
+        
+        #x = (pos[u][0] + pos[v][0]) / 2
+        #y = (pos[u][1] + pos[v][1]) / 2
+        if G.has_edge(v, u):
+            x = pos[v][0]+(pos[u][0]-pos[v][0])*0.1
+            y = pos[v][1]+(pos[u][1]-pos[v][1])*0.1
+        else:
+            x = (pos[u][0] + pos[v][0]) / 2
+            y = (pos[u][1] + pos[v][1]) / 2
+        
+        
+        plt.text(x, y, weight, fontsize=8, ha='center', va='center', 
                  bbox=dict(facecolor='white', alpha=0.8, edgecolor='none'))
-    
-    # Рисуем метки вершин
+
     nx.draw_networkx_labels(G, pos, font_size=12)
     
-    # Сохраняем изображение
+
     filename = os.path.join(config.VIZ_DIR, f"step_{step_counter:03d}_{stage}.png")
     plt.savefig(filename, format='png', bbox_inches='tight')
     plt.close()

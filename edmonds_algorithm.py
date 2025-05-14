@@ -75,9 +75,9 @@ def LiuEdmondsAlgorithm(Vertexes: set[int], edges_set: set[tuple[int,int]], root
     for u,v in edges_set:                                           # Обновление вершин и ребер для нового графа с супервершиной, а также инициализация returnal_edges
         if u not in cycle and v in cycle:
             edge = (u, super_vertex)
-            if edge in new_edges_set and new_edges_dict[edge] < edges_dict[(u,v)] - min_edges[v][0]:
+            if edge in new_edges_set and new_edges_dict[edge] < edges_dict[(u,v)] - min_edges[v][1]:
                 continue                                            # При наличии нескольких ребер из одной вершины в супервершину - выбирается минимальное из них
-            new_edges_dict[edge] = edges_dict[(u,v)] - min_edges[v][0]
+            new_edges_dict[edge] = edges_dict[(u,v)] - min_edges[v][1]
             returnal_edges[edge] = (u,v)                            # Сохранение старого ребра для дальнейшего разжатия
             new_edges_set.add(edge)
         elif u in cycle and v not in cycle:
@@ -87,13 +87,14 @@ def LiuEdmondsAlgorithm(Vertexes: set[int], edges_set: set[tuple[int,int]], root
                 if edges_dict[(early_edge, v)] < edges_dict[(u,v)]:
                     continue
             new_edges_set.add(edge)      
-            new_edges_dict[edge] = edges_dict[(u,v)]  
+            new_edges_dict[edge] = edges_dict[(u,v)]
             returnal_edges[edge] = (u,v)
         elif u not in cycle and v not in cycle:
             edge = (u,v)    
             new_edges_set.add(edge)
             new_edges_dict[edge] = edges_dict[(u,v)]
             returnal_edges[edge] = (u,v)
+            
     ### Шаг 6: Рекурсивный вызов для нового графа         
     new_building = LiuEdmondsAlgorithm(new_vertexes, new_edges_set, root, new_edges_dict, n+1)
     ### Шаг 7: Разжатие стянутых циклов и построение дерева
