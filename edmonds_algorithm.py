@@ -70,14 +70,15 @@ def LiuEdmondsAlgorithm(Vertexes: set[int], edges_set: set[tuple[int,int]], root
         cycle.add(prev_vertex[0])
         prev_vertex = min_edges.get(prev_vertex[0])
     ### Шаг 5: Построение нового графа, где найденный цикл стянут в супервершину   
-    super_vertex = n + 1                                            # Создание новой супервершины
+    super_vertex = str(n + 1)                                            # Создание новой супервершины
     new_vertexes, new_edges_set, new_edges_dict, returnal_edges  = (Vertexes - cycle) | {super_vertex}, set(), {}, {}
     for u,v in edges_set:                                           # Обновление вершин и ребер для нового графа с супервершиной, а также инициализация returnal_edges
         if u not in cycle and v in cycle:
             edge = (u, super_vertex)
             if edge in new_edges_set and new_edges_dict[edge] < edges_dict[(u,v)] - min_edges[v][1]:
                 continue                                            # При наличии нескольких ребер из одной вершины в супервершину - выбирается минимальное из них
-            new_edges_dict[edge] = edges_dict[(u,v)] - min_edges[v][1]
+            #new_edges_dict[edge] = edges_dict[(u,v)] - min_edges[v][1]
+            new_edges_dict[edge] = edges_dict[(u,v)] + min_edges[min_edges[v][0]][1]
             returnal_edges[edge] = (u,v)                            # Сохранение старого ребра для дальнейшего разжатия
             new_edges_set.add(edge)
         elif u in cycle and v not in cycle:
@@ -109,8 +110,12 @@ def LiuEdmondsAlgorithm(Vertexes: set[int], edges_set: set[tuple[int,int]], root
         answer.add((u,v))
     # Визуализация: Граф с разжатой супервершиной, рёбра цикла — синие
     draw_graph(Vertexes, edges_dict, root, cycle=cycle, stage=f"recursion_{recursion_level}_expanded_cycle")    
-    answer.remove(cycle_edge)                                           # Удаление из списка одного ребра для устранения цикла
-    
+    #if cycle_edge is None
+    super_vertex = str(int(super_vertex)-1)
+    if cycle_edge is None:
+        cycle_edge = (super_vertex, min_edges[super_vertex][0])
+    answer.remove(cycle_edge )                                           # Удаление из списка одного ребра для устранения цикла
+
     # Визуализация: Граф с разжатой супервершиной, MST — красное, удалённое ребро — чёрное
     draw_graph(Vertexes, edges_dict, root, mst_edges=answer, stage=f"recursion_{recursion_level}_expanded_mst")
     return answer            

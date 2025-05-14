@@ -18,9 +18,8 @@ def reading_file():
         else:
             edges_dict[(u,v)] = min(height, edges_dict[(u,v)])
         edges_set.add((u,v))
-        vertexes |= {u,v}
-    root = int(inp[-1])   
-    print(root)
+        vertexes |= {u,v}   
+    root = str(int(inp[-1])*100)   
     ff.close()
     return n,root,vertexes,edges_dict,edges_set
 
