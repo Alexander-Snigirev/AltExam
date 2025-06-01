@@ -1,4 +1,4 @@
 VIZ_DIR = "viz"
-FNAME = "file3"
+FNAME = "examples/file3"
 MODE = 'file'
 
