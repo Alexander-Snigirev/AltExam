@@ -77,8 +77,8 @@ def LiuEdmondsAlgorithm(Vertexes: set[int], edges_set: set[tuple[int,int]], root
             edge = (u, super_vertex)
             if edge in new_edges_set and new_edges_dict[edge] < edges_dict[(u,v)] - min_edges[v][1]:
                 continue                                            # При наличии нескольких ребер из одной вершины в супервершину - выбирается минимальное из них
-            #new_edges_dict[edge] = edges_dict[(u,v)] - min_edges[v][1]
-            new_edges_dict[edge] = edges_dict[(u,v)] + min_edges[min_edges[v][0]][1]
+            new_edges_dict[edge] = edges_dict[(u,v)] - min_edges[v][1]
+            #new_edges_dict[edge] = edges_dict[(u,v)] + min_edges[min_edges[v][0]][1]
             returnal_edges[edge] = (u,v)                            # Сохранение старого ребра для дальнейшего разжатия
             new_edges_set.add(edge)
         elif u in cycle and v not in cycle:
