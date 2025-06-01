@@ -1,7 +1,7 @@
-from config import config
+from config import FNAME
 
 def reading_file():
-    ff = open(config.FNAME)
+    ff = open(FNAME)
     inp = ff.readlines()
     n,m = list(map(int,inp[0].split()))
     
