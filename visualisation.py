@@ -1,15 +1,15 @@
 import networkx as nx
 import os
 import matplotlib.pyplot as plt
-from config import config
+from config import VIZ_DIR
 import numpy as np
 
 step_counter = 0
 
 def ensure_viz_dir():
     """Создаёт папку viz, если она не существует."""
-    if not os.path.exists(config.VIZ_DIR):
-        os.makedirs(config.VIZ_DIR)
+    if not os.path.exists(VIZ_DIR):
+        os.makedirs(VIZ_DIR)
 
 def draw_graph(vertexes: set, edges_dict: dict, root: int, 
                min_edges: dict = None, cycle: set = None, 
@@ -95,7 +95,7 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
     nx.draw_networkx_labels(G, pos, font_size=12)
     
 
-    filename = os.path.join(config.VIZ_DIR, f"step_{step_counter:03d}_{stage}.png")
+    filename = os.path.join(VIZ_DIR, f"step_{step_counter:03d}_{stage}.png")
     plt.savefig(filename, format='png', bbox_inches='tight')
     plt.close()
     
