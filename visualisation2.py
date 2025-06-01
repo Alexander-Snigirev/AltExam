@@ -40,26 +40,23 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
     edge_widths = []
     for u, v in G.edges():
         if mst_edges and (u, v) in mst_edges:
-            edge_colors.append('r')  # Рёбра остова — красные
-            edge_widths.append(2.5)  # Увеличенная толщина
+            edge_colors.append('r')  
+            edge_widths.append(2.5)  
         elif min_edges and (u, v) in [(min_edges[to][0], to) for to in min_edges]:
-            edge_colors.append('r')  # Минимальные рёбра — красные
-            edge_widths.append(2.5)  # Увеличенная толщина
+            edge_colors.append('r')
+            edge_widths.append(2.5)
         elif cycle is not None and min_edges and (u, v) in [(min_edges[to][0], to) for to in cycle if to in min_edges]:
-            edge_colors.append('b')  # Рёбра цикла — синие
-            edge_widths.append(1.0)  # Стандартная толщина
+            edge_colors.append('b')
+            edge_widths.append(1.0)
         else:
-            edge_colors.append('k')  # Обычные рёбра — чёрные
-            edge_widths.append(1.0)  # Стандартная толщина
+            edge_colors.append('k')
+            edge_widths.append(1.0)
     
-    # Определяем цвета вершин
     node_colors = ['y' if v == root else 'b' if cycle is not None and v in cycle else 'lightblue' for v in G.nodes()]
     
-    # Рисуем граф
-    plt.figure(figsize=(10, 8))  # Увеличиваем размер изображения
-    pos = nx.spring_layout(G, seed=100, k=0.25)  # Увеличиваем расстояние между вершинами с помощью k
+    plt.figure(figsize=(10, 8))
+    pos = nx.spring_layout(G, seed=100, k=0.25)
     
-    # Рисуем вершины
     nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=300)
     
     # Рисуем рёбра с кривизной для двунаправленных дуг
@@ -74,20 +71,17 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
             edge_styles.append('arc3,rad=0')  # Прямая стрелка
             curved_edges[(u, v)] = 0
     
-    # Рисуем рёбра с индивидуальной толщиной
     for (u, v), style, color, width in zip(G.edges(), edge_styles, edge_colors, edge_widths):
         nx.draw_networkx_edges(
             G, pos, edgelist=[(u, v)], edge_color=color, width=width,
             arrows=True, connectionstyle=style, arrowsize=15
         )
     
-    # Рисуем метки рёбер
+
     edge_labels = nx.get_edge_attributes(G, 'weight')
     
-    # Создаем словарь с метками для прямых рёбер
     straight_edges = {(u, v): w for (u, v), w in edge_labels.items() if not G.has_edge(v, u)}
     
-    # Рисуем метки для прямых рёбер стандартным способом
     if straight_edges:
         nx.draw_networkx_edge_labels(
             G, pos,
@@ -131,7 +125,6 @@ def draw_graph(vertexes: set, edges_dict: dict, root: int,
             label_x = (1-t)**2 * x1 + 2*(1-t)*t * cx + t**2 * x2
             label_y = (1-t)**2 * y1 + 2*(1-t)*t * cy + t**2 * y2
             
-            # Размещаем метку на вычисленной позиции
             plt.text(label_x, label_y, weight, fontsize=8, ha='center', va='center', 
                      bbox=dict(facecolor='white', alpha=0.8, edgecolor='none'))
     
