@@ -1,4 +1,5 @@
-VIZ_DIR = "viz"
-FNAME = "examples/file3"
-MODE = 'file'
+VIZ_DIR = "viz1"            # Директория, куда будет сохранена визуализация
+FNAME = "examples/file2"    # Файл с графом
+MODE = 'file'               # 'console' || 'file'
+VIZ_MODE = '2'              # '1' || '2'
 

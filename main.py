@@ -1,4 +1,4 @@
-from edmonds_algorithm import run
+from algorithm.edmonds_algorithm import run
 from config import MODE
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import unittest
-from edmonds_algorithm import LiuEdmondsAlgorithm
+from algorithm.edmonds_algorithm import LiuEdmondsAlgorithm
 
 
 class TestLiuEdmondsAlgorithm(unittest.TestCase):
